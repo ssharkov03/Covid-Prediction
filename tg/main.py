@@ -4,8 +4,12 @@ import plotly
 import plotly.graph_objs as go  # Offline mode
 
 df = pd.read_csv('C:/Users/Владислав/PycharmProjects/tg_bot/covid_data_train.csv',sep=";")
+df1 = pd.read_csv('C:/Users/Владислав/PycharmProjects/tg_bot/covid_data_test.csv')
+pred = pd.read_csv('C:/Users/Владислав/PycharmProjects/tg_bot/NSU-ES-Team.csv')
+df1 = df1.drop('Unnamed: 0', axis=1)
+df1['inf_rate'] = pred
 df = df.drop('Unnamed: 0', axis=1)
-
+df = pd.concat([df,df1],axis=0)
 
 def to_int_size(value):
     try:
