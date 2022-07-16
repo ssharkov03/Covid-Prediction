@@ -3,7 +3,7 @@ from main import graph_map
 from main import check_flag
 import main
 bot = telebot.TeleBot('5416009013:AAEJCgFVQbyBMXYIersiftQYG70zTIexNQA')
-@bot.message_handler(commands=['test'])
+@bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(text='Россия', callback_data=1))
@@ -15,7 +15,7 @@ def get_text_messages(message):
     markup.add(telebot.types.InlineKeyboardButton(text='Центральный', callback_data=7))
     markup.add(telebot.types.InlineKeyboardButton(text='Северо-Западный', callback_data=8))
     markup.add(telebot.types.InlineKeyboardButton(text='Северо-Кавказский', callback_data=9))
-    bot.send_message(message.chat.id, text="Привет! Статистика по какому региону тебя интересует?", reply_markup=markup)
+    bot.send_message(message.chat.id, text="Здравствуйте! Статистика по какому региону вас интересует?", reply_markup=markup)
     ChatId = message.chat.id
     print(ChatId)
     f = open("C:/Users/Владислав/PycharmProjects/tg_bot/text", "w")

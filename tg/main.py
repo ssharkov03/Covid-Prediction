@@ -20,16 +20,22 @@ capital = df[df['name'] == 'Лангепас']
 
 
 def graph_map(df):
-    fig = go.Figure(data=[go.Scattermapbox(lat=df['lat'], lon=df['lng'], text=df['name'], name='map'),
+    fig = go.Figure(data=[go.Scattermapbox(lat=df['lat'], lon=df['lng'], text=df['name'], name='общая карта'),
                           go.Scattermapbox(lat=df['lat'], lon=df['lng'], text=df['name'],
-                                           marker=dict(colorbar=dict(title="inf_rate"),
+                                           marker=dict(colorbar=dict(title="частота заражения"),
                                                        color=df['inf_rate'],
-                                                       size=df['population'].map(to_int_size)), name='inf_rate'),
+                                                       size=df['whole_population'].map(to_int_size)), name='частота заражения'),
 
                           go.Scattermapbox(lat=df['lat'], lon=df['lng'], text=df['name'],
-                                           marker=dict(colorbar=dict(title="ivl_per_100k"),
+                                           marker=dict(colorbar=dict(title="ИВЛ на 100 тыс."),
                                                        color=df['ivl_per_100k'],
-                                                       size=df['population'].map(to_int_size)), name='ivl_per_100k')])
+                                                       size=df['whole_population'].map(to_int_size)), name='ИВЛ на 100 тыс.'),
+                          go.Scattermapbox(lat=df['lat'], lon=df['lng'], text=df['name'],
+                                           marker=dict(colorbar=dict(title="ЭКМО на 100 тыс."),
+                                                       color=df['ekmo_per_100k'],
+                                                       size=df['whole_population'].map(to_int_size)), name='ЭКМО на 100 тыс.')
+
+                          ])
     map_center = go.layout.mapbox.Center(lat=float(capital['lat']), lon=float(capital['lng']))
     fig.update_coloraxes(showscale=False)
     fig.update(layout_showlegend=False)
@@ -41,20 +47,27 @@ def graph_map(df):
                               type="buttons",
                               direction="up",
                               buttons=list([
-                                  dict(label="map",
+                                  dict(label="общая карта",
                                        method="restyle",
-                                       args=[{"visible": [True, False, False]},
+                                       args=[{"visible": [True, False, False,False]},
                                              ]),
 
-                                  dict(label="inf_rate",
+                                  dict(label="частота заражения",
                                        method="restyle",
-                                       args=[{"visible": [False, True, False]},
+                                       args=[{"visible": [False, True, False,False]},
                                              ]),
 
-                                  dict(label="ivl_per_100k",
+                                  dict(label="ИВЛ на 100 тыс.",
                                        method="restyle",
-                                       args=[{"visible": [False, False, True]}]
-                                       )
+                                       args=[{"visible": [False, False, True,False]}]
+                                       ),
+                                  dict(label="ЭКМО на 100 тыс.",
+                                       method="restyle",
+                                       args=[{"visible": [False, False,False, True]}]
+                                       ),
+
+
+
                               ]),
                               showactive=True,
                           ),
